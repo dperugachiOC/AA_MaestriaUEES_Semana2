@@ -15,7 +15,7 @@ Docente: Ingeniera GLADYS MARIA VILLEGAS RUGEL
 
 Fecha de Ultima Actualizacion: 01 Febrero 2026
 
-#Para instalar las Librerias y Dependiencias ejecute: 
+# Para instalar las Librerias y Dependiencias ejecute: 
 
 pip install -r requirements.txt
 
