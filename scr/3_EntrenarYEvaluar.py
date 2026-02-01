@@ -32,6 +32,7 @@ from sklearn.metrics import (
     classification_report, confusion_matrix, accuracy_score,
     f1_score, precision_score, recall_score
 )
+import joblib
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -42,7 +43,9 @@ warnings.filterwarnings("ignore")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_PATH = os.path.join(BASE_DIR, "Data", "DataSet2024.csv")
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
+MODELS_DIR = os.path.join(BASE_DIR, "Models")
 os.makedirs(RESULTS_DIR, exist_ok=True)
+os.makedirs(MODELS_DIR, exist_ok=True)
 
 
 def save_fig(fig, name):
@@ -391,7 +394,42 @@ fig.tight_layout()
 save_fig(fig, "17_gridsearch_svm.png")
 
 # =========================================================
-# 8. TABLA RESUMEN FINAL
+# 8. EXPORTAR MODELOS A CARPETA Models/
+# =========================================================
+print("\n" + "=" * 60)
+print("  EXPORTACION DE MODELOS")
+print("=" * 60)
+
+# Guardar los 3 modelos entrenados
+modelos_export = {
+    "arbol_decision": dt_model,
+    "svm": svm_model,
+    "random_forest": rf_model,
+}
+
+for nombre_archivo, modelo_obj in modelos_export.items():
+    path_modelo = os.path.join(MODELS_DIR, f"{nombre_archivo}.pkl")
+    joblib.dump(modelo_obj, path_modelo)
+    print(f"  -> Modelo guardado: {path_modelo}")
+
+# Guardar el scaler y los encoders para inferencia futura
+joblib.dump(scaler, os.path.join(MODELS_DIR, "scaler.pkl"))
+print(f"  -> Scaler guardado: {os.path.join(MODELS_DIR, 'scaler.pkl')}")
+
+joblib.dump(le_target, os.path.join(MODELS_DIR, "label_encoder_target.pkl"))
+print(f"  -> LabelEncoder target guardado: {os.path.join(MODELS_DIR, 'label_encoder_target.pkl')}")
+
+joblib.dump(le_sector, os.path.join(MODELS_DIR, "label_encoder_sector.pkl"))
+print(f"  -> LabelEncoder sector guardado: {os.path.join(MODELS_DIR, 'label_encoder_sector.pkl')}")
+
+joblib.dump(feature_cols, os.path.join(MODELS_DIR, "feature_columns.pkl"))
+print(f"  -> Feature columns guardado: {os.path.join(MODELS_DIR, 'feature_columns.pkl')}")
+
+print(f"\n  Total de archivos exportados: {len(os.listdir(MODELS_DIR))}")
+print(f"  Directorio: {MODELS_DIR}")
+
+# =========================================================
+# 9. TABLA RESUMEN FINAL
 # =========================================================
 print("\n" + "=" * 60)
 print("  RESUMEN DE RESULTADOS")

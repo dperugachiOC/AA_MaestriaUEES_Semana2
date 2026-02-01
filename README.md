@@ -332,3 +332,67 @@ Ensamble de 200 arboles de decision con agregacion por votacion mayoritaria.
 #### 17. GridSearchCV - SVM (Ajuste de Kernel y C)
 
 ![GridSearch SVM](results/17_gridsearch_svm.png)
+
+---
+
+## Comparacion Experimental
+
+> Script: [`scr/4_ComparacionExperimental.py`](scr/4_ComparacionExperimental.py)
+
+### Metricas Globales (weighted)
+
+| Modelo | Accuracy | Precision | Recall | F1-Score | Tiempo |
+|---|---|---|---|---|---|
+| Arbol de Decision | 0.9778 | 0.9794 | 0.9778 | 0.9782 | 0.37s |
+| SVM (linear, C=10) | 0.7196 | 0.7760 | 0.7196 | 0.6918 | 31.73s |
+| **Random Forest** | **0.9931** | **0.9931** | **0.9931** | **0.9931** | **5.52s** |
+
+### Metricas por Clase
+
+| Modelo | Clase | Precision | Recall | F1-Score | Support |
+|---|---|---|---|---|---|
+| Arbol de Decision | Alto | 0.9934 | 0.9838 | 0.9885 | 8,991 |
+| Arbol de Decision | Bajo | 0.9949 | 0.9731 | 0.9839 | 14,401 |
+| Arbol de Decision | Medio | 0.8823 | 0.9813 | 0.9291 | 3,581 |
+| SVM (linear, C=10) | Alto | 0.9881 | 0.4423 | 0.6111 | 8,991 |
+| SVM (linear, C=10) | Bajo | 0.6744 | 0.9835 | 0.8001 | 14,401 |
+| SVM (linear, C=10) | Medio | 0.6519 | 0.3541 | 0.4589 | 3,581 |
+| **Random Forest** | **Alto** | **0.9957** | **0.9851** | **0.9904** | **8,991** |
+| **Random Forest** | **Bajo** | **0.9952** | **0.9999** | **0.9975** | **14,401** |
+| **Random Forest** | **Medio** | **0.9784** | **0.9858** | **0.9821** | **3,581** |
+
+### Analisis de Resultados
+
+- **Random Forest** es el mejor modelo con un F1-Score de 0.9931, logrando precision y recall superiores al 98% en las tres clases.
+- **Arbol de Decision** obtiene resultados solidos (F1 = 0.9782), con su punto mas debil en la precision de la clase Medio (0.88).
+- **SVM** presenta el rendimiento mas bajo (F1 = 0.6918), con dificultades especiales para clasificar las clases Alto (recall 0.44) y Medio (recall 0.35). Esto se debe a las limitaciones del modelo lineal con datos de alta complejidad y al uso de una muestra reducida por restricciones computacionales.
+
+### Visualizaciones de la Comparacion
+
+#### 18. Matrices de Confusion Detalladas (Absolutas y Normalizadas)
+
+![Matrices Confusion Detalladas](results/18_matrices_confusion_detalladas.png)
+
+#### 19. Barplot de Metricas Globales
+
+![Barplot Metricas Globales](results/19_barplot_metricas_globales.png)
+
+#### 20. Heatmap de Metricas por Clase
+
+![Heatmap Metricas por Clase](results/20_heatmap_metricas_por_clase.png)
+
+#### 21. F1-Score por Clase y Modelo
+
+![F1 por Clase](results/21_barplot_f1_por_clase.png)
+
+#### 22. Radar Comparativo de Modelos
+
+![Radar Comparativo](results/22_radar_comparativo.png)
+
+#### 23. Tabla Resumen de Comparacion
+
+![Tabla Resumen](results/23_tabla_resumen_comparacion.png)
+
+#### 24. Tabla de Metricas por Clase
+
+![Tabla Metricas por Clase](results/24_tabla_metricas_por_clase.png)
