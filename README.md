@@ -7,6 +7,7 @@ Repositorio para la materia de **Aprendizaje Automatico** - Maestria en Intelige
 ---
 Estudiante:
 Ingeniero Gonzalo Mejia Alcivar
+
 Ingeniero Jorge Ortiz Merchan
 
 Docente: Ingeniera GLADYS MARIA VILLEGAS RUGEL
@@ -145,3 +146,81 @@ Adicionalmente se derivaron los indicadores **ROA** (Rentabilidad sobre Activos)
 #### 8. Estadisticas Descriptivas por Clase
 
 ![Tabla Estadisticas por Clase](results/08_tabla_estadisticas_por_clase.png)
+
+---
+
+## Preprocesamiento de Datos
+
+> Script: [`scr/2_PreProcesamiento.py`](scr/2_PreProcesamiento.py)
+
+### Pasos Realizados
+
+#### 1. Eliminacion de columna Año
+
+Se elimino la columna **Año** del dataset ya que contiene un unico valor (2024) y no aporta poder predictivo al modelo. El dataset paso de 11 a **10 columnas**.
+
+#### 2. Tratamiento de valores nulos
+
+Se realizo un diagnostico completo de valores nulos en el dataset:
+
+- **Nulos encontrados:** 0
+- **Estrategia definida:** Mediana para variables numericas, moda para categoricas (aplicable si se detectaran nulos tras conversion de tipos)
+
+#### 3. Codificacion de variables categoricas
+
+Se aplico **LabelEncoder** a la variable categorica **Sector**:
+
+| Valor Original | Codigo |
+|---|---|
+| MERCADO DE VALORES | 0 |
+| SOCIETARIO | 1 |
+
+Variable objetivo **Desempeno**:
+
+| Nivel | Codigo |
+|---|---|
+| Alto | 0 |
+| Bajo | 1 |
+| Medio | 2 |
+
+#### 4. Escalado de variables numericas
+
+Se aplico **StandardScaler** (estandarizacion Z-score) a las 10 features del modelo, transformando cada variable para tener **media = 0** y **desviacion estandar = 1**.
+
+Features escaladas:
+`Sector`, `Cant_Empleados`, `Activo`, `Patrimonio`, `IngresoVentas`, `UtilidadAntesImpuestos`, `UtilidadEjercicio`, `UtilidadNeta`, `IR_Causado`, `IngresosTotales`
+
+#### 5. Division en conjunto de entrenamiento y prueba (80/20)
+
+Se realizo una division **estratificada** para mantener la proporcion de clases en ambos conjuntos:
+
+| Conjunto | Registros | Porcentaje |
+|---|---|---|
+| Entrenamiento | 107,892 | 80% |
+| Prueba | 26,973 | 20% |
+
+Distribucion de clases (verificacion de estratificacion):
+
+| Clase | Entrenamiento | Prueba |
+|---|---|---|
+| Bajo | 53.39% | 53.39% |
+| Alto | 33.33% | 33.33% |
+| Medio | 13.28% | 13.28% |
+
+### Visualizaciones del Preprocesamiento
+
+#### 9. Comparativa Antes/Despues del Escalado
+
+![Comparativa Escalado](results/09_comparativa_escalado.png)
+
+#### 10. Distribucion Train/Test por Clase
+
+![Distribucion Train Test](results/10_distribucion_train_test.png)
+
+#### 11. Distribucion de Features Escaladas
+
+![Distribucion Features Escaladas](results/11_distribucion_features_escaladas.png)
+
+#### 12. Resumen del Preprocesamiento
+
+![Resumen Preprocesamiento](results/12_resumen_preprocesamiento.png)
